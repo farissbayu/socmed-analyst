@@ -1,0 +1,98 @@
+[
+  {
+    "id_opd": 1,
+    "nama_opd": "Dinas Komunikasi dan Informatika",
+    "singkatan": "Diskominfo",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang komunikasi, informatika, statistik, dan persandian.",
+    "kategori_tugas": "teknologi informasi, komunikasi, persandian, statistik",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 2,
+    "nama_opd": "Dinas Kesehatan",
+    "singkatan": "Dinkes",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang kesehatan masyarakat, pencegahan penyakit, dan pelayanan medis.",
+    "kategori_tugas": "kesehatan masyarakat, pelayanan medis, pencegahan penyakit",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 3,
+    "nama_opd": "Dinas Pendidikan dan Kebudayaan",
+    "singkatan": "Dispendikbud",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang pendidikan anak usia dini, pendidikan dasar, dan pelestarian kebudayaan.",
+    "kategori_tugas": "pendidikan, kebudayaan, pelayanan dasar",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 4,
+    "nama_opd": "Dinas Kependudukan dan Pencatatan Sipil",
+    "singkatan": "Dispendukcapil",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang administrasi kependudukan, penerbitan identitas, dan pencatatan sipil.",
+    "kategori_tugas": "pelayanan publik, administrasi kependudukan, catatan sipil",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 5,
+    "nama_opd": "Dinas Sosial",
+    "singkatan": "Dinsos",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang sosial, perlindungan, jaminan sosial, dan rehabilitasi masyarakat.",
+    "kategori_tugas": "kesejahteraan sosial, rehabilitasi, perlindungan masyarakat",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 6,
+    "nama_opd": "Dinas Perumahan dan Kawasan Permukiman",
+    "singkatan": "Disperkim",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang penataan perumahan, kawasan permukiman, dan penerangan jalan umum.",
+    "kategori_tugas": "infrastruktur, perumahan, kawasan permukiman, penerangan jalan",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 7,
+    "nama_opd": "Dinas Pariwisata",
+    "singkatan": "Dispar",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang pengembangan destinasi pariwisata dan ekonomi kreatif daerah.",
+    "kategori_tugas": "pariwisata, ekonomi kreatif, promosi daerah",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 8,
+    "nama_opd": "Dinas Pekerjaan Umum Bina Marga dan Bina Konstruksi",
+    "singkatan": "DPUBMBK",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang pekerjaan umum, pembangunan jalan, jembatan, dan infrastruktur konstruksi.",
+    "kategori_tugas": "infrastruktur, pekerjaan umum, bina marga, konstruksi",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 9,
+    "nama_opd": "Badan Perencanaan Pembangunan, Penelitian dan Pengembangan Daerah",
+    "singkatan": "Bappelitbangda",
+    "deskripsi_tugas": "Melaksanakan fungsi penunjang urusan pemerintahan bidang perencanaan pembangunan daerah, penelitian, dan pengembangan.",
+    "kategori_tugas": "perencanaan daerah, penelitian, pengembangan, evaluasi",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 10,
+    "nama_opd": "Badan Penanggulangan Bencana Daerah",
+    "singkatan": "BPBD",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang ketentraman, ketertiban umum, dan pelindungan masyarakat khusus sub urusan bencana.",
+    "kategori_tugas": "kebencanaan, kedaruratan, keselamatan, mitigasi",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 11,
+    "nama_opd": "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+    "singkatan": "DPMPTSP",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang perizinan, penanaman modal, dan pelayanan administrasi terpadu.",
+    "kategori_tugas": "pelayanan publik, perizinan, penanaman modal, investasi",
+    "tiktok_user_id": null
+  },
+  {
+    "id_opd": 12,
+    "nama_opd": "Dinas Lingkungan Hidup",
+    "singkatan": "DLH",
+    "deskripsi_tugas": "Menyelenggarakan urusan pemerintahan bidang tata lingkungan, pengelolaan sampah, dan pengendalian pencemaran lingkungan.",
+    "kategori_tugas": "lingkungan hidup, pengelolaan sampah, tata ruang, konservasi",
+    "tiktok_user_id": null
+  }
+]
