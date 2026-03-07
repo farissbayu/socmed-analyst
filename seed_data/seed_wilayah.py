@@ -1,15 +1,11 @@
 import re
-from sqlmodel import Session, create_engine
-from app.models.database import WilayahKecamatan, WilayahDesa  # Sesuaikan path-nya
-
-sqlite_url = "sqlite:///database.db"
-engine = create_engine(sqlite_url)
+from sqlmodel import Session
+from app.models.database import WilayahKecamatan, WilayahDesa
+from app.models.engine import engine
 
 
 def seed_from_sql_files():
     with Session(engine) as session:
-        print("Mulai seeding data...")
-
         try:
             with open("seed_data/wilayah_kecamatan.sql", "r", encoding="utf-8") as f:
                 content = f.read()
@@ -22,9 +18,8 @@ def seed_from_sql_files():
                 for kecamatan in kecamatan_list:
                     session.merge(kecamatan)
                 session.commit()
-                print(f"Berhasil memproses {len(kecamatan_list)} data Kecamatan.")
         except FileNotFoundError:
-            print("File wilayah_kecamatan.sql tidak ditemukan!")
+            pass
 
         try:
             with open("seed_data/wilayah_desa.sql", "r", encoding="utf-8") as f:
@@ -40,12 +35,10 @@ def seed_from_sql_files():
                 for desa in desa_list:
                     session.merge(desa)
                 session.commit()
-                print(f"Berhasil memproses {len(desa_list)} data Desa.")
         except FileNotFoundError:
-            print("File desa.sql tidak ditemukan!")
+            pass
 
         session.commit()
-        print("Seeding selesai dan berhasil disimpan ke database!")
 
 
 if __name__ == "__main__":
