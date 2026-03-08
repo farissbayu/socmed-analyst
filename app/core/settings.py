@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./database.db"
     OPENROUTER_API_KEY: str
     OPENROUTER_BASE_URL: str
+    APIFY_API_KEY: str
+    APIFY_TIKTOK_ACTOR: str = "GdWCkxBtKWOsKjdch"
     REDIS_URL: str = "redis://localhost:6379"
 
     model_config = SettingsConfigDict(env_file=".env")
