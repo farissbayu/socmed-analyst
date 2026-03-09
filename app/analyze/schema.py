@@ -33,3 +33,7 @@ class Aspiration(BaseModel):
     total_spam: int = Field(
         description="Removed comment that count as spam, oot or emoji only"
     )
+    target_opd: str | None = Field(
+        default=None,
+        description="Target OPD (Organisasi Perangkat Daerah) that should handle the core issues",
+    )

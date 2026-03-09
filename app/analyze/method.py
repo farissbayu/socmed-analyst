@@ -1,5 +1,9 @@
 from app.utils.apify_client import apify_get_videos
-from app.analyze.prompt import INPUT_EXTRACTION_PROMPT, CORE_ISSUE_EXTRACTION_PROMPT
+from app.analyze.prompt import (
+    INPUT_EXTRACTION_PROMPT,
+    CORE_ISSUE_EXTRACTION_PROMPT,
+    EXECUTIVE_SUMMARY_PROMPT,
+)
 from datetime import datetime, timedelta
 from app.utils.openai import oa_client
 from app.models.database import TikTokUser, TikTokComment, TikTokVideo
@@ -103,8 +107,6 @@ def get_from_database(
         hour=23, minute=59, second=59
     )
 
-    print(f"Start date: {start_dt} | End date: {end_dt}")
-
     # initiate condition of filter for where clause
     stmt = select(TikTokComment.text).where(
         TikTokComment.create_time_iso >= start_dt,
@@ -188,3 +190,30 @@ def extract_core_issue(topic: str, comments: list[str]) -> Aspiration:
 
     result = response.choices[0].message.parsed.model_dump()  # type: ignore
     return Aspiration(**result)
+
+
+def generate_executive_summary(aspiration: Aspiration) -> str:
+    response = oa_client.chat.completions.create(
+        model="google/gemini-3-flash-preview",
+        messages=[
+            {
+                "role": "system",
+                "content": EXECUTIVE_SUMMARY_PROMPT,
+            },
+            {
+                "role": "user",
+                "content": f"Berikut adalah data pengaduan warga yang telah diproses. Buatkan Executive Summary berdasarkan data berikut: {aspiration}",
+            },
+        ],
+        extra_body={"reasoning": {"enabled": True}},
+    )
+
+    if not response:
+        raise ValueError("No response value provided")
+
+    result = response.choices[0].message.content
+
+    if not result:
+        raise ValueError("Failed to get message content")
+
+    return result
