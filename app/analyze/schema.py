@@ -20,3 +20,16 @@ class ExtractedInputSchema(BaseModel):
         description="Affected district if user input includes location"
     )
     time_filter: TimeFilter = Field(description="Time span user asked")
+
+
+class Aspiration(BaseModel):
+    valid_complaint: list[str] = Field(
+        description="Valid complaint based on the topic and comments"
+    )
+    suggested_questions: list[str] = Field(
+        description="Suggestion and question extracted from comments"
+    )
+    appreciation: list[str] = Field(description="Appreciation from comments")
+    total_spam: int = Field(
+        description="Removed comment that count as spam, oot or emoji only"
+    )

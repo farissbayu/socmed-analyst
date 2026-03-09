@@ -13,8 +13,7 @@ from app.analyze.method import (
     get_safe_timeframe,
     determine_data_source,
     get_from_database,
-    get_target_accounts,
-    scrape_tiktok_videos,
+    extract_core_issue,
 )
 from app.analyze.schema import AnalyzeInput
 
@@ -32,6 +31,9 @@ def index():
 @app.post("/analyze")
 def get_socmed_analysis(body: AnalyzeInput, db: Session = Depends(get_db)):
     extracted_input = extract_input(body.topic)
+    topic = extracted_input.topic
+    keywords = extracted_input.keywords
+
     print(extracted_input)
 
     safe_timeframe = get_safe_timeframe(extracted_input.time_filter)
@@ -41,19 +43,24 @@ def get_socmed_analysis(body: AnalyzeInput, db: Session = Depends(get_db)):
     print(data_source)
 
     data = []
-    if data_source == "scraping":
-        pass
+
     # PENDING | BUDGET RELATED REASON
+    # if data_source == "scraping":
+    #     pass
     # elif data_source == "scraping newest":
     #     target_accounts = get_target_accounts(db)
     #     videos_result = scrape_tiktok_videos(
     #         target_accounts, safe_timeframe[0], safe_timeframe[1]
     #     )
     #     data = videos_result
-    elif data_source == "database only":
-        data = get_from_database(db, safe_timeframe[0], safe_timeframe[1])
+    # elif data_source == "database only":
+    #     data = get_from_database(db, safe_timeframe[0], safe_timeframe[1])
 
-    return data
+    data = get_from_database(db, keywords, safe_timeframe[0], safe_timeframe[1])
+    print(data)
+    core_issue = extract_core_issue(topic, data)
+
+    return core_issue
 
 
 @app.get("/scalar")

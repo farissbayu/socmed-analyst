@@ -1,10 +1,10 @@
 from app.utils.apify_client import apify_get_videos
-from app.analyze.prompt import INPUT_EXTRACTION_PROMPT
+from app.analyze.prompt import INPUT_EXTRACTION_PROMPT, CORE_ISSUE_EXTRACTION_PROMPT
 from datetime import datetime, timedelta
 from app.utils.openai import oa_client
 from app.models.database import TikTokUser, TikTokComment, TikTokVideo
-from sqlmodel import Session, select, desc
-from app.analyze.schema import ExtractedInputSchema, TimeFilter
+from sqlmodel import Session, select, desc, col, or_
+from app.analyze.schema import ExtractedInputSchema, TimeFilter, Aspiration
 
 date_format = "%Y-%m-%d"
 
@@ -95,7 +95,9 @@ def determine_data_source(db: Session, requested_end_date: str) -> str:
     return "database only"
 
 
-def get_from_database(db: Session, requested_start_date: str, requested_end_date: str):
+def get_from_database(
+    db: Session, keywords: list[str], requested_start_date: str, requested_end_date: str
+):
     start_dt = datetime.strptime(requested_start_date, date_format)
     end_dt = datetime.strptime(requested_end_date, date_format).replace(
         hour=23, minute=59, second=59
@@ -103,14 +105,22 @@ def get_from_database(db: Session, requested_start_date: str, requested_end_date
 
     print(f"Start date: {start_dt} | End date: {end_dt}")
 
-    stmt = (
-        select(TikTokComment.text)
-        .where(
-            TikTokComment.create_time_iso >= start_dt,
-            TikTokComment.create_time_iso <= end_dt,
-        )
-        .limit(200)
+    # initiate condition of filter for where clause
+    stmt = select(TikTokComment.text).where(
+        TikTokComment.create_time_iso >= start_dt,
+        TikTokComment.create_time_iso <= end_dt,
     )
+
+    # change keywords from list of string
+    # into "or text like %keyword%"
+    if keywords:
+        keyword_filters = [
+            col(TikTokComment.text).ilike(f"%{keyword}%") for keyword in keywords
+        ]
+
+        stmt = stmt.where(or_(*keyword_filters))
+
+    stmt = stmt.limit(200)
     data_from_db = db.exec(stmt)
 
     return data_from_db.all()
@@ -143,3 +153,38 @@ def scrape_tiktok_videos(
 
     result = apify_get_videos.call(run_input=run_input)
     return result
+
+
+def format_comments_for_llm(raw_comments: list[str]) -> str:
+    cleaned_list = []
+    for comment in raw_comments:
+        clean_text = comment.replace("\n", " ").strip()
+        if clean_text:
+            cleaned_list.append(f"- {clean_text}")
+
+    return "\n".join(cleaned_list)
+
+
+def extract_core_issue(topic: str, comments: list[str]) -> Aspiration:
+    formatted_comments = format_comments_for_llm(comments)
+
+    response = oa_client.chat.completions.parse(
+        model="google/gemini-3-flash-preview",
+        messages=[
+            {
+                "role": "system",
+                "content": CORE_ISSUE_EXTRACTION_PROMPT,
+            },
+            {
+                "role": "user",
+                "content": f"Topic: {topic}, comments: {formatted_comments}",
+            },
+        ],
+        response_format=Aspiration,
+    )
+
+    if not response:
+        raise ValueError("No response provided")
+
+    result = response.choices[0].message.parsed.model_dump()  # type: ignore
+    return Aspiration(**result)
