@@ -57,5 +57,4 @@ def analyze(topic: str, db: Session):
 @celery_app.task
 def analyze_task(topic: str):
     with Session(engine) as db:
-        # 4. Lempar session 'db' yang baru dibuat ini ke fungsi analyze utama
         analyze(topic, db)
