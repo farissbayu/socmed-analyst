@@ -7,15 +7,9 @@
 # -> Analyze the problem based on data provided
 # -> Generate summmary or report
 from app.analyze.task import analyze_task
-
-from sqlmodel import Session
-
-from app.models.engine import get_db
-
 from app.analyze.schema import AnalyzeInput
-
 from scalar_fastapi import get_scalar_api_reference
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 
 app = FastAPI()
 
@@ -26,8 +20,8 @@ def index():
 
 
 @app.post("/analyze")
-def get_socmed_analysis(body: AnalyzeInput, db: Session = Depends(get_db)):
-    analyze_task.delay(body.topic, db)
+def get_socmed_analysis(body: AnalyzeInput):
+    analyze_task.delay(body.topic)
 
     return {"message": "Processing..."}
 

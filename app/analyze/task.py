@@ -1,3 +1,4 @@
+from app.models.engine import engine
 from app.celery_app import celery_app
 from sqlmodel import Session
 import datetime
@@ -54,5 +55,7 @@ def analyze(topic: str, db: Session):
 
 
 @celery_app.task
-def analyze_task(topic: str, db: Session):
-    analyze(topic, db)
+def analyze_task(topic: str):
+    with Session(engine) as db:
+        # 4. Lempar session 'db' yang baru dibuat ini ke fungsi analyze utama
+        analyze(topic, db)
